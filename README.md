@@ -1,4 +1,4 @@
-# Kinetic Digits
+# FlipDigit kinetic display
 
 [![Kinetic-Digits-hero](assets/Kinetic-Digits.gif)](https://twitter.com/motus_art/status/1417507367969861653)  
 Kinetic Digits, is a mechanical Flip Digit display made up of 448 7-segment digits.
@@ -32,7 +32,7 @@ See [cast_convertImage()](https://github.com/owenmcateer/FlipDigits/blob/master/
 
 ## Build list
 - XY7 7-segment Flip Digit panels from [AlfaZeta](https://flipdots.com/en/xy7-flip-digits-panels/)
-- Laser cut steel back plate. Design file: [pdf](assets/Back-place.pdf)/[dxf](assets/Back-place.dxf)
+- Laser cut steel back plate. Design file: [pdf](https://github.com/owenmcateer/FlipDigits/blob/main/assets/Back-plate.pdf)/[dxf](https://github.com/owenmcateer/FlipDigits/blob/main/assets/Back-plate.dxf)
 - 24V 16A PSU
 - Ethernet to RS485 Serial converter [ETH-UKW485SR140](http://www.sklep.uk-system.pl/konwertery-eth-ukw485sr140-z-4-portami-szeregowymi-rs485-p-41.html)
 - RJ11 cables
