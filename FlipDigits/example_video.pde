@@ -18,23 +18,23 @@ void example_video_load() {
 }
 
 // Video render tick
-void example_video() {  
+void example_video() {
   // Play video
   if (video_movie.available()) {
     video_movie.read();
-    
+
     // Loop video
     if (video_movie.time() > video_movie.duration() - 0.1) {
       video_movie.jump(0);
-    }  
-    
+    }
+
     // Debug text
-    ui_debug_text = video_movie.time() + " / " + round(video_movie.duration() * 100) / 100 + "s"; 
+    ui_debug_text = round(video_movie.time() * 100.0) / 100.0 + " / " + round(video_movie.duration() * 100.0) / 100.0 + "s";
   }
-  
+
   // Draw image
   virtualDisplay.image(video_movie, 0, 0, virtualDisplay.width, virtualDisplay.height);
-  
+
   // Threshold
   float video_threshold = 0.5;
   virtualDisplay.filter(THRESHOLD, video_threshold);

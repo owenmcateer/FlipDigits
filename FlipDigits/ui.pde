@@ -21,13 +21,13 @@ void ui_setup() {
 
 /**
  * Processing window UI
- * 
+ *
  * Very much inspired by the amazing FLIPDIGITS PLAYER by @ksawerykomputery
  * https://ksawerykomputery.pl/tools/flipdigits-player
  *
  * This UI gives a preview of the 7-segment display and important stats.
  */
-void ui_renderPreview() {  
+void ui_renderPreview() {
   // Preview styling
   background(239);
   noFill();
@@ -40,16 +40,16 @@ void ui_renderPreview() {
   for (int x = 0; x < display_digits_w; x++) {
     for (int y = 0; y < display_digits_h; y++) {
       rect(
-        x * display_previewDigitSize_w, 
-        y * display_previewDigitSize_h, 
-        display_previewDigitSize_w, 
+        x * display_previewDigitSize_w,
+        y * display_previewDigitSize_h,
+        display_previewDigitSize_w,
         display_previewDigitSize_h
         );
 
       int binaryNum = cast_get_digit(x, y);
       ui_drawDigit(
-        binaryNum, 
-        x * display_previewDigitSize_w, 
+        binaryNum,
+        x * display_previewDigitSize_w,
         y * display_previewDigitSize_h
         );
     }
@@ -88,7 +88,7 @@ void ui_renderPreview() {
   text("Network adapters:", 0, 400);
   for (int i = 0; i < adapters.length; i++) {
     text(adapters[i], 15, 420 + i * 20);
-    
+
     fill(212, 15, 15);
     if (castData) {
       fill(18, 222, 45);
@@ -104,7 +104,7 @@ void ui_renderPreview() {
   // Debug text
   text("Debug msg:", 0, 520);
   if (ui_debug_text != null) {
-    text(ui_debug_text, 0, 520);
+    text(ui_debug_text, 0, 540);
   }
 
   // RAW byte data being cast (not recommended, but fun to see)
@@ -124,10 +124,10 @@ void ui_renderPreview() {
  */
 void ui_drawDigit(int num, int x, int y) {
   image(
-    previewSegments[num], 
-    x, 
-    y, 
-    display_previewDigitSize_w, 
+    previewSegments[num],
+    x,
+    y,
+    display_previewDigitSize_w,
     display_previewDigitSize_h
   );
 }
