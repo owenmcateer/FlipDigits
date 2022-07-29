@@ -31,6 +31,7 @@ void setup() {
 
   // Add your own setup calls here if needed.
   //example_video_load();
+  //crypto_ticker_setup();
 }
 
 void draw() {
@@ -52,6 +53,9 @@ void draw() {
 
   // RAW digit mode
   //example_rawdigits();
+
+  // Crypto ticker
+  //crypto_ticker();
 
   // End drawing
   virtualDisplay.endDraw();

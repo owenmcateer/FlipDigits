@@ -78,5 +78,6 @@ void setRawCharacters() {
   
   rawCharacterCodes.set("-", 0x01);
   rawCharacterCodes.set("_", 0x08);
+  rawCharacterCodes.set(".", 0x08); // Copy of _
   rawCharacterCodes.set("=", 0x09);
 }
