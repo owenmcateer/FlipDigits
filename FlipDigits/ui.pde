@@ -90,9 +90,12 @@ void ui_renderPreview() {
     text(adapters[i], 15, 420 + i * 20);
 
     fill(212, 15, 15);
-    if (castData) {
-      fill(18, 222, 45);
-    }
+    try {
+      if (clients[i].ip() != null) {
+        fill(18, 222, 45);
+      }
+    } catch(NullPointerException e) {}
+    
     ellipse(6, 415 + i * 20, 7, 7);
     fill(0);
   }
