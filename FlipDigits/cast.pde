@@ -108,6 +108,11 @@ void castTick() {
     // Each panel connected to adapter
     for (int panelId = 0; panelId < adapter_panels.length; panelId++) {
       // TODO only cast if panels data has changed
+      
+      // If panel is not connected
+      if (clients[adapter].ip() == null) break;
+      
+      // Send data
       clients[adapter].write(0x80);
       clients[adapter].write((colVideoSync) ? 0x84 : 0x83);
       clients[adapter].write(adapter_panels[panelId]);
@@ -121,6 +126,10 @@ void castTick() {
   // Video sync update
   if (colVideoSync) {
     for (int adapter = 0; adapter < adapters.length; adapter++) {
+      
+      // If panel is not connected
+      if (clients[adapter].ip() == null) break;
+      
       clients[adapter].write(0x80);
       clients[adapter].write(0x82);
       clients[adapter].write(0x8F);
