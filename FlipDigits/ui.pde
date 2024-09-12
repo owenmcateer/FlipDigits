@@ -1,6 +1,7 @@
 PImage[] previewSegments;
 String ui_debug_text = null;
 PFont font_OpenSans;
+long ui_start_time;
 
 
 /**
@@ -9,6 +10,10 @@ PFont font_OpenSans;
  * - Font files
  */
 void ui_setup() {
+  // Runtime
+  ui_start_time = millis();
+  
+  // Preview sizing
   previewSegments = new PImage[128];
   for (int i = 0; i < previewSegments.length; i++) {
     previewSegments[i] = loadImage("segments/segment-" + str(i) + ".png");
@@ -70,24 +75,34 @@ void ui_renderPreview() {
   // FPS
   textSize(14);
   text("FPS: " + round(frameRate * 100) / 100, 0, 50);
+
+  // Runtime
+  long elapsed_time = millis() - ui_start_time;
+  // Format the time as HH:MM:SS
+  int hours = (int) (elapsed_time / (1000 * 60 * 60));
+  int minutes = (int) ((elapsed_time - (hours * 1000 * 60 * 60)) / (1000 * 60));
+  int seconds = (int) ((elapsed_time - (hours * 1000 * 60 * 60) - (minutes * 1000 * 60)) / 1000);
+  String formatted_time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+  text("Runtime: " + formatted_time, 0, 70);
+  
   stroke(0);
-  line(0, 65, 140, 65);
+  line(0, 85, 140, 85);
   noStroke();
 
   // Virtual displays
-  text("Virtual screen", 0, 100);
-  image(virtualDisplay, 0, 110);
+  text("Virtual screen", 0, 120);
+  image(virtualDisplay, 0, 130);
 
-  text("X-aligned segments", 0, 250);
-  image(stages_screen_v, 0, 260);
+  text("X-aligned segments", 0, 270);
+  image(stages_screen_v, 0, 280);
 
-  text("Y-aligned segments", 0, 320);
-  image(stages_screen_h, 0, 330);
+  text("Y-aligned segments", 0, 340);
+  image(stages_screen_h, 0, 350);
 
   // Network adapters
-  text("Network adapters:", 0, 400);
+  text("Network adapters:", 0, 420);
   for (int i = 0; i < adapters.length; i++) {
-    text(adapters[i], 15, 420 + i * 20);
+    text(adapters[i], 15, 440 + i * 20);
 
     fill(212, 15, 15);
     try {
@@ -96,18 +111,18 @@ void ui_renderPreview() {
       }
     } catch(NullPointerException e) {}
     
-    ellipse(6, 415 + i * 20, 7, 7);
+    ellipse(6, 435 + i * 20, 7, 7);
     fill(0);
   }
 
   stroke(0);
-  line(0, 500, 140, 500);
+  line(0, 520, 140, 520);
   noStroke();
 
   // Debug text
-  text("Debug msg:", 0, 520);
+  text("Debug msg:", 0, 540);
   if (ui_debug_text != null) {
-    text(ui_debug_text, 0, 540);
+    text(ui_debug_text, 0, 560);
   }
 
   // RAW byte data being cast (not recommended, but fun to see)
