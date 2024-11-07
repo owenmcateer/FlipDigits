@@ -1,6 +1,6 @@
 # FlipDigit kinetic display
 
-[![Kinetic-Digits-hero](assets/Kinetic-Digits.gif)](https://twitter.com/motus_art/status/1417507367969861653)  
+[![Kinetic-Digits-hero](assets/Kinetic-Digits.gif)](https://x.com/motus_art/status/1417507367969861653)  
 Kinetic Digits, is a mechanical Flip Digit display made up of 448 7-segment digits.
 
 
