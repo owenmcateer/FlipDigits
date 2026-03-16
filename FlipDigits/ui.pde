@@ -101,12 +101,12 @@ void ui_renderPreview() {
 
   // Network adapters
   text("Network adapters:", 0, 420);
-  for (int i = 0; i < adapters.length; i++) {
-    text(adapters[i], 15, 440 + i * 20);
+  for (int i = 0; i < netAdapters.length; i++) {
+    text(netAdapters[i], 15, 440 + i * 20);
 
     fill(212, 15, 15);
     try {
-      if (clients[i].ip() != null) {
+      if (adaptersNet[i].ip() != null) {
         fill(18, 222, 45);
       }
     } catch(NullPointerException e) {}

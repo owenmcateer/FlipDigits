@@ -1,7 +1,7 @@
 /**
  * Display settings
  */
-boolean castData = false;                           // Enable casting to FlipDigit displays
+boolean castData = true;                           // Enable casting to FlipDigit displays
 int display_fps = 30;                              // FPS 1-60 (recommended 30-40fps with a good serial converter and a baudrate of 57600)
 int display_panels_w = 4;                          // Number of 7x4 panels wide
 int display_panels_h = 4;                          // Number of 7x4 panels tall
@@ -18,18 +18,30 @@ boolean colVideoSync = true;                      // This use the FlipDigit pane
 boolean display_mode_raw = false;
 
 // Network settings
+//   1 = ETH network
+//   2 = USB serial
+int castOver = 2;
+
+// Network settings
 // RS485 converters
-String[] adapters = {
+String[] netAdapters = {
   "192.168.1.100:5003",
   "192.168.1.100:5002",
   "192.168.1.100:5001",
   "192.168.1.100:5000",
 };
+// USB device
+// COM port:baud rate
+String[] serialAdapters = {
+  "COM7:57600"
+};
+
 byte[] adapter_panels = {
   1, 2, 3, 4
 };
 
-Client[] clients = new Client[adapters.length];
+Client[] adaptersNet = new Client[netAdapters.length];
+Serial[] adaptersSerial = new Serial[serialAdapters.length];
 
 
 /**

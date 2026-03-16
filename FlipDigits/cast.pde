@@ -1,4 +1,5 @@
 import processing.net.*;
+import processing.serial.*;
 int[][] cast_buffer;
 
 /**
@@ -22,9 +23,24 @@ void cast_setup() {
   if (!castData) return;
   
   // Connect to each network adapter
-  for (int i = 0; i < adapters.length; i++) {
-    String[] adapterAddress = split(adapters[i], ':');
-    clients[i] = new Client(this, adapterAddress[0], int(adapterAddress[1]));
+  // Cast over Network
+  if (castOver == 1) {
+    // Connect to each network adapter
+    for (int i = 0; i < netAdapters.length; i++) {
+      String[] adapterAddress = split(netAdapters[i], ':');
+      adaptersNet[i] = new Client(this, adapterAddress[0], int(adapterAddress[1]));
+    }
+  }
+  // Cast over USB Serial device
+  else if (castOver == 2) {
+    // Uncomment List all the available serial ports:
+    printArray(Serial.list());
+
+    // Connect to each USB serial device
+    for (int i = 0; i < serialAdapters.length; i++) {
+      String[] adapterAddress = split(serialAdapters[i], ':');
+      adaptersSerial[i] = new Serial(this, adapterAddress[0], int(adapterAddress[1]));
+    }
   }
 }
 
@@ -104,35 +120,32 @@ void castTick() {
   if (!castData) return;
  
   // Push data to all adapters
-  for (int adapter = 0; adapter < adapters.length; adapter++) {
+  int adapterCount = netAdapters.length;
+  if (castOver == 2) {
+    adapterCount = serialAdapters.length;
+  }
+  
+  // Push data to all adapters
+  for (int adapter = 0; adapter < adapterCount; adapter++) {
     // Each panel connected to adapter
     for (int panelId = 0; panelId < adapter_panels.length; panelId++) {
-      // TODO only cast if panels data has changed
-      
-      // If panel is not connected
-      if (clients[adapter].ip() == null) break;
-      
       // Send data
-      clients[adapter].write(0x80);
-      clients[adapter].write((colVideoSync) ? 0x84 : 0x83);
-      clients[adapter].write(adapter_panels[panelId]);
+      cast_write(adapter, 0x80);
+      cast_write(adapter, (colVideoSync) ? 0x84 : 0x83);
+      cast_write(adapter, int(adapter_panels[panelId]));
 
-      clients[adapter].write(cast_panel_buffer(adapter, panelId));
+      cast_write(adapter, cast_panel_buffer(adapter, panelId));
 
-      clients[adapter].write(0x8F); // Closure
+      cast_write(adapter, 0x8F); // Closure
     }
   }
   
   // Video sync update
   if (colVideoSync) {
-    for (int adapter = 0; adapter < adapters.length; adapter++) {
-      
-      // If panel is not connected
-      if (clients[adapter].ip() == null) break;
-      
-      clients[adapter].write(0x80);
-      clients[adapter].write(0x82);
-      clients[adapter].write(0x8F);
+    for (int adapter = 0; adapter < adapterCount; adapter++) {
+      cast_write(adapter, 0x80);
+      cast_write(adapter, 0x82);
+      cast_write(adapter, 0x8F);
     }
   }
 }
@@ -209,4 +222,38 @@ int cast_convertImage(int x, int y) {
  */
 int cast_get_digit(int x, int y) {
   return cast_buffer[y][x];
+}
+
+
+/**
+ * Cast write
+ *
+ * Push data out over adapter.
+ *
+ * @param {int} adapter          | Adapter ID {netAdapters/serialAdapters} 
+ * @param {int/byte/byte[]} data | Frame data
+ * @return {void}
+ */
+void cast_write(int adapter, int data) {
+  if (castOver == 1) {
+    // Network adapter
+    adaptersNet[adapter].write(data);
+  }
+  else if(castOver == 2) {
+    // USB Serial device
+    adaptersSerial[adapter].write(data);
+  }
+}
+void cast_write(int adapter, byte data) {
+  cast_write(adapter, data);
+}
+void cast_write(int adapter, byte[] data) {
+  if (castOver == 1) {
+    // Network adapter
+    adaptersNet[adapter].write(data);
+  }
+  else if(castOver == 2) {
+    // USB Serial device
+    adaptersSerial[adapter].write(data);
+  }
 }
